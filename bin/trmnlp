@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+set -e
+cd "$(dirname "$0")/.."
+export TRMNLP_PLUGIN_ROOT="${TRMNLP_PLUGIN_ROOT:-$(pwd)}"
+if command -v trmnlp >/dev/null 2>&1; then
+  exec trmnlp "$@"
+fi
+TRMNLP_CONFIG="${TRMNLP_CONFIG:-$HOME/.config/trmnlp}"
+mkdir -p "$TRMNLP_CONFIG"
+exec docker run --rm -it \
+  --pull always \
+  --publish 4567:4567 \
+  --env TRMNLP_PLUGIN_ROOT=/plugin \
+  --workdir /plugin \
+  --volume "$(pwd):/plugin" \
+  --volume "$TRMNLP_CONFIG:/root/.config/trmnlp" \
+  trmnl/trmnlp "$@"

@@ -1,0 +1,5 @@
+_build/
+.DS_Store
+.venv/
+.pytest_cache/
+.ruff_cache/

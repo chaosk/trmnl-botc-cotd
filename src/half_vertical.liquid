@@ -1,0 +1,23 @@
+
+{% if show_error %}
+  <div class="layout layout--col layout--center">
+    <div class="content content--center">
+      <span class="title title--small">Setup needed</span>
+      <p class="description">{{ show_error }}</p>
+    </div>
+  </div>
+{% else %}
+  <div class="layout layout--col layout--center layout--center-y layout--stretch botc-layout">
+    {% render "wiki_qr", wiki_url: wiki_url %}
+    {% render "character_card",
+      layout: "half_vertical",
+      name: name,
+      type: type,
+      ability: ability,
+      flavor: flavor,
+      icon_url: icon_url
+    %}
+  </div>
+{% endif %}
+
+{% render "title_bar", name: name, cycle_length: cycle_length, day_in_cycle: day_in_cycle %}

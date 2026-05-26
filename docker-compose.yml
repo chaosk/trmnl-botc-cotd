@@ -1,0 +1,11 @@
+services:
+  trmnlp:
+    image: trmnl/trmnlp:latest
+    command: ["serve"]
+    ports:
+      - "4567:4567"
+    environment:
+      TRMNLP_PLUGIN_ROOT: /plugin
+    working_dir: /plugin
+    volumes:
+      - .:/plugin

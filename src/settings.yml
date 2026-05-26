@@ -1,0 +1,29 @@
+---
+strategy: static
+no_screen_padding: 'no'
+dark_mode: 'yes'
+static_data: "{}"
+polling_verb: get
+framework_version: latest
+serverless_language: python
+polling_url: ''
+polling_headers: ''
+polling_body: ''
+id: 315072
+custom_fields:
+- keyname: start_date
+  field_type: string
+  name: Rotation start date
+  description: First day of cycle 0 (YYYY-MM-DD). Set a new date to restart the rotation.
+  placeholder: '2026-05-01'
+  default: '2026-05-01'
+  help_text: One character per day; a full cycle shows every character available when that cycle began.
+- keyname: shuffle_seed
+  field_type: string
+  name: Shuffle seed
+  description: Salt for per-cycle character order. Change to reshuffle without changing the start date.
+  placeholder: 'botc-trmnl-cotd-v1'
+  default: 'botc-trmnl-cotd-v1'
+  help_text: Same seed and start date give the same rotation. A different seed changes the order each cycle.
+name: BotC Character of the Day
+refresh_interval: 1440

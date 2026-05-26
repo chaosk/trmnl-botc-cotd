@@ -1,0 +1,179 @@
+{% assign show_error = error %}
+
+<style>
+  /* QR corner — TRMNL docs pattern for qr_code filter output */
+  .botc-layout {
+    position: relative;
+  }
+  .botc-layout .qr-code {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    z-index: 100;
+    width: 72px;
+    height: 72px;
+    background-color: var(--white);
+    padding: 4px;
+    border: 1px solid var(--black);
+    box-sizing: border-box;
+  }
+  .view--half_horizontal .botc-layout .qr-code,
+  .view--half_vertical .botc-layout .qr-code {
+    width: 64px;
+    height: 64px;
+  }
+  .view--quadrant .botc-layout .qr-code {
+    top: 2px;
+    right: 2px;
+    width: 52px;
+    height: 52px;
+  }
+  .screen--dark-mode .botc-layout .qr-code {
+    border-color: var(--gray-45);
+  }
+  .botc-layout .qr-code svg {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  /* Icon bounds inside flex layouts */
+  .botc-icon.image--contain {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+  }
+  .view--full .botc-icon.image--contain {
+    max-height: 300px;
+  }
+  .view--half_vertical .botc-icon.image--contain {
+    max-height: 220px;
+  }
+  .view--half_horizontal .botc-icon.image--contain {
+    max-height: 160px;
+  }
+  .view--quadrant .botc-icon.image--contain {
+    max-height: 140px;
+  }
+  .botc-flavor {
+    font-style: italic;
+    font-weight: 400;
+  }
+  /* ~60% content column (fallback if w--[60cqw] unavailable in preview) */
+  .botc-content {
+    width: 60%;
+    max-width: 60%;
+    flex: 0 1 auto;
+    align-self: center;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+</style>
+
+{% template wiki_qr %}
+  {% if wiki_url != blank %}
+    {{ wiki_url | qr_code: 3 }}
+  {% endif %}
+{% endtemplate %}
+
+{% template character_text %}
+  {% assign clamp_lines = 6 %}
+  {% if layout == 'quadrant' %}
+    {% assign clamp_lines = 3 %}
+  {% endif %}
+
+  {% assign title_size_class = "title--xxlarge" %}
+  {% if layout == 'quadrant' %}
+    {% assign title_size_class = "title--large" %}
+  {% elsif layout == 'half_horizontal' or layout == 'half_vertical' %}
+    {% assign title_size_class = "title--xlarge" %}
+  {% endif %}
+
+  {% assign text_align = "text--center" %}
+  {% assign flex_align = "flex--center-x" %}
+  {% assign flex_stretch = "" %}
+  {% if layout == 'half_horizontal' %}
+    {% assign text_align = "text--left" %}
+    {% assign flex_align = "flex--left flex--top" %}
+  {% elsif layout == 'half_vertical' %}
+    {% assign flex_stretch = " stretch-x" %}
+  {% endif %}
+
+  <div class="flex flex--col gap gap--xsmall {{ flex_align }} {{ text_align }}{{ flex_stretch }}">
+    <span class="title font--bold {{ title_size_class }}">{{ name }}</span>
+    {% if type != blank %}
+      <span class="label">{{ type }}</span>
+    {% endif %}
+    {% if ability != blank or flavor != blank %}
+      <div class="flex flex--col gap gap--medium {{ flex_align }} {{ text_align }}{{ flex_stretch }}">
+        {% if ability != blank %}
+          <div class="description">{{ ability | markdown_to_html }}</div>
+        {% endif %}
+        {% if flavor != blank %}
+          <span class="description text--gray-45 botc-flavor" data-clamp="{{ clamp_lines }}">{{ flavor | escape }}</span>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+{% endtemplate %}
+
+{% template character_card %}
+  {% if layout == 'half_horizontal' %}
+    <div class="botc-content flex flex--row flex--center-y gap gap--medium no-shrink w--[60cqw]">
+      {% if icon_url != blank %}
+        <img class="image image--contain botc-icon no-shrink" src="{{ icon_url }}" alt="{{ name }}" />
+      {% endif %}
+      {% render "character_text",
+        layout: layout,
+        name: name,
+        type: type,
+        ability: ability,
+        flavor: flavor
+      %}
+    </div>
+  {% elsif layout == 'half_vertical' %}
+    <div class="flex flex--col flex--center-x flex--center-y gap gap--small stretch stretch-x stretch-y">
+      {% if icon_url != blank %}
+        <img class="image image--contain botc-icon" src="{{ icon_url }}" alt="{{ name }}" />
+      {% endif %}
+      {% render "character_text",
+        layout: layout,
+        name: name,
+        type: type,
+        ability: ability,
+        flavor: flavor
+      %}
+    </div>
+  {% else %}
+    <div class="botc-content flex flex--col flex--center-x flex--center-y gap gap--small w--[60cqw]">
+      {% if icon_url != blank %}
+        <img class="image image--contain botc-icon" src="{{ icon_url }}" alt="{{ name }}" />
+      {% endif %}
+      {% render "character_text",
+        layout: layout,
+        name: name,
+        type: type,
+        ability: ability,
+        flavor: flavor
+      %}
+    </div>
+  {% endif %}
+{% endtemplate %}
+
+{% template title_bar %}
+  <div class="title_bar">
+    <img
+      class="image"
+      src="https://wiki.bloodontheclocktower.com/favicon.ico"
+      alt="Blood on the Clocktower Wiki"
+    />
+    <span class="title">Character of the Day</span>
+    <span class="instance">
+      {% if cycle_length %}
+        {{ day_in_cycle }}/{{ cycle_length }}
+      {% else %}
+        (ノ ゜Д゜)ノ ︵ ┻━┻
+      {% endif %}
+    </span>
+  </div>
+{% endtemplate %}
