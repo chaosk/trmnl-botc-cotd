@@ -27,6 +27,7 @@ LIQUID_MARKERS = {
         "character_text",
         "title_bar",
         "wiki_qr",
+        "show_qr_code",
         "qr_code: 3",
         "flex flex--col",
         "data-clamp",

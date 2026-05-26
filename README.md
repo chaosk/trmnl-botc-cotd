@@ -8,12 +8,13 @@ A [TRMNL](https://trmnl.com/) private plugin that shows **one Blood on the Clock
   <img alt="Full layout on a TRMNL display" src="docs/demo-light.png">
 </picture>
 
-Each day you get the character token, name, type, ability, flavor text, and a QR code to the [official wiki](https://wiki.bloodontheclocktower.com/).
+Each day you get the character token, name, type, ability, flavor text, and optionally a QR code to the [official wiki](https://wiki.bloodontheclocktower.com/) (toggle **Wiki QR code** in plugin settings).
 
 ## How the rotation works
 
 - Set a **start date** — that begins **cycle 0**.
 - Optional **shuffle seed** — salt for per-cycle order (change it to reshuffle without moving the start date).
+- Optional **wiki QR code** — corner link to the character’s wiki page (disable in plugin settings for a cleaner layout).
 - Each **cycle** shows every character that was available when that cycle started, **one per day**, in a **deterministic shuffle** unique to that cycle.
 - The **last character of a cycle never appears again on the first day of the next cycle** (no back-to-back repeats at boundaries).
 - **New wiki characters** only join at the **next** cycle (mid-cycle is never disrupted).

@@ -25,5 +25,11 @@ custom_fields:
   placeholder: 'botc-trmnl-cotd-v1'
   default: 'botc-trmnl-cotd-v1'
   help_text: Same seed and start date give the same rotation. A different seed changes the order each cycle.
+- keyname: show_qr_code
+  field_type: boolean
+  name: Wiki QR code
+  description: Show a QR code linking to this character's wiki page.
+  default: true
+  help_text: Turn off for a cleaner layout.
 name: BotC Character of the Day
 refresh_interval: 1440

@@ -85,6 +85,23 @@ def shuffle_seed_from_input(
     return DEFAULT_SHUFFLE_SEED
 
 
+def show_qr_code_from_input(input_data: JsonDict) -> bool:
+    """Whether to render the wiki QR corner (default on)."""
+    for val in (
+        input_data.get("show_qr_code"),
+        custom_fields_from_input(input_data).get("show_qr_code"),
+    ):
+        if val is None:
+            continue
+        if isinstance(val, bool):
+            return val
+        s = str(val).strip().lower()
+        if s in ("false", "0", "no", "off"):
+            return False
+        return True
+    return True
+
+
 # --- Manifest ----------------------------------------------------------------
 
 
@@ -329,6 +346,7 @@ def merge_output(
     today: date,
     cycle: CycleSchedule,
     day_in_cycle: int,
+    show_qr_code: bool,
 ) -> JsonDict:
     return {
         **character_fields(char),
@@ -337,6 +355,7 @@ def merge_output(
         "cycle_length": len(cycle.order),
         "start_date": start.isoformat(),
         "today": today.isoformat(),
+        "show_qr_code": show_qr_code,
     }
 
 
@@ -363,5 +382,10 @@ def run(input_data: JsonDict) -> JsonDict:
         return plugin_error(str(exc))
 
     return merge_output(
-        char, start=start, today=today, cycle=cycle, day_in_cycle=day_in_cycle
+        char,
+        start=start,
+        today=today,
+        cycle=cycle,
+        day_in_cycle=day_in_cycle,
+        show_qr_code=show_qr_code_from_input(input_data),
     )

@@ -6,6 +6,7 @@ watch:
 custom_fields:
   start_date: "2026-05-01"
   shuffle_seed: "botc-trmnl-cotd-v1"
+  show_qr_code: true
 
 transform_runtime: enabled
 

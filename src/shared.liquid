@@ -71,7 +71,7 @@
 </style>
 
 {% template wiki_qr %}
-  {% if wiki_url != blank %}
+  {% if show_qr_code and wiki_url != blank %}
     {{ wiki_url | qr_code: 3 }}
   {% endif %}
 {% endtemplate %}

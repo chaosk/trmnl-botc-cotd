@@ -5,7 +5,7 @@
   </div>
 {% else %}
   <div class="layout layout--col layout--center layout--center-y botc-layout">
-    {% render "wiki_qr", wiki_url: wiki_url %}
+    {% render "wiki_qr", wiki_url: wiki_url, show_qr_code: show_qr_code %}
     {% render "character_card",
       layout: "quadrant",
       name: name,
