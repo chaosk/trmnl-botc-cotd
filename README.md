@@ -17,7 +17,7 @@ Each day you get the character token, name, type, ability, flavor text, and opti
 - Optional **wiki QR code** — corner link to the character’s wiki page (disable in plugin settings for a cleaner layout).
 - Each **cycle** shows every character that was available when that cycle started, **one per day**, in a **deterministic shuffle** unique to that cycle.
 - The **last character of a cycle never appears again on the first day of the next cycle** (no back-to-back repeats at boundaries).
-- **New wiki characters** only join at the **next** cycle (mid-cycle is never disrupted).
+- **New characters** only join at the **next** cycle (mid-cycle is never disrupted).
 - To restart from scratch, set a new start date in plugin settings.
 
 Example: cycle 0 has 5 characters (5 days). A 6th character is added on day 3 — days 0–4 stay the same; cycle 1 (day 5+) uses all 6 with a new shuffle order.
